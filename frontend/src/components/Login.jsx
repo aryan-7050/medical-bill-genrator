@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -15,10 +16,14 @@ const Login = () => {
     setError('');
 
     try {
-      const response = await axios.post('http://localhost:5000/api/auth/login', {
-        email,
-        password
-      });
+      // ✅ FIXED: Use deployed backend URL
+      const response = await axios.post(
+        process.env.REACT_APP_API_URL + "/auth/login",
+        {
+          email,
+          password
+        }
+      );
       
       if (response.data.success) {
         // Store token and user data
@@ -29,7 +34,12 @@ const Login = () => {
         navigate('/dashboard');
       }
     } catch (error) {
-      setError(error.response?.data?.message || 'Login failed. Please try again.');
+      // ✅ Better error handling
+      setError(
+        error.response?.data?.message ||
+        error.message ||
+        "Server not reachable 🚫 (Check backend URL)"
+      );
     } finally {
       setLoading(false);
     }
@@ -121,3 +131,4 @@ const Login = () => {
 };
 
 export default Login;
+
