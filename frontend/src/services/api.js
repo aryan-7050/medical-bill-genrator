@@ -1,7 +1,10 @@
 import axios from "axios";
 
-// ✅ Define base URL properly
-const API_URL = "https://medical-bill-genrator-yf4q.onrender.com/api";
+// ✅ Use environment variable
+const API_URL = process.env.REACT_APP_API_URL;
+
+// ✅ Debug (check in browser console)
+console.log("API URL:", API_URL);
 
 const api = axios.create({
   baseURL: API_URL,
